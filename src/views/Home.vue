@@ -77,26 +77,32 @@
           title: 'Select script file',
           properties: ['openFile']
         })
-        this.previewResults = core.processScript(filePath[0]).map(r => ({
-          data: r,
-          hasShowDetail: false,
-          syncing: false,
-          hasFinished: r.add.length === 0 && r.delete.length === 0,
-          showDetail: function() {
-            this.hasShowDetail = !this.hasShowDetail
-          },
-          sync: function() {            
-            this.syncing = true
-            core.sync(this.data.sourcePath, this.data.targetPath).then(() => {
-              this.hasFinished = true
-            })
-            .catch(err => {
-              console.error(err)
-            }).finally(() => {
-              this.syncing = false
-            })
+        if (filePath && filePath.length > 0) {
+          try {
+            this.previewResults = core.processScript(filePath[0]).map(r => ({
+              data: r,
+              hasShowDetail: false,
+              syncing: false,
+              hasFinished: r.add.length === 0 && r.delete.length === 0,
+              showDetail: function() {
+                this.hasShowDetail = !this.hasShowDetail
+              },
+              sync: function() {            
+                this.syncing = true
+                core.sync(this.data.sourcePath, this.data.targetPath).then(() => {
+                  this.hasFinished = true
+                })
+                .catch(err => {
+                  alert(err)
+                }).finally(() => {
+                  this.syncing = false
+                })
+              }
+            }))
+          } catch (err) {
+            alert(err)
           }
-        }))
+        }
       },
       syncAll: function() {
         this.previewResults.forEach(vm => {
