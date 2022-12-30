@@ -29,7 +29,7 @@
     "electron": "^5.0.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "rewire": "^4.0.1",
     "sinon": "^7.3.2",
     "stylus": "^0.54.5",
